@@ -1,34 +1,71 @@
 import TodoList from './TodoList';
 import styles from '../../assets/css/Todos.module.css';
 import Button from './Button';
+import { useState } from 'react';
+import {nanoid} from 'nanoid';
 
 function Todos() {
 
   const defaultTodos = [
     {
-      id: 'TodosList1',
+      id: nanoid(),
       title: 'Задача 1',
       completed: false,
     },
     {
-      id: 'TodosList2',
+      id: nanoid(),
       title: 'Задача 2',
       completed: false,
     },
     {
-      id: 'TodosList3',
+      id: nanoid(),
       title: 'Задача 3',
       completed: false,
     },
     {
-      id: 'TodosList4',
+      id: nanoid(),
       title: 'Задача 4',
       completed: true,
     },
   ];
 
+  const [todos, setTodos] = useState(defaultTodos);
+
   const addTodo = () => {
-    alert('Пока ничего не добавлено');
+    setTodos(
+      [
+        ...todos,
+        {
+          id: nanoid(),
+          title: 'Новая задача',
+          completed: false,
+        }
+      ]
+    );
+  }
+
+  const deleteTodos = (id) => {
+    if (!id)
+      return;
+    setTodos(
+      todos.filter(current => current.id !== id)
+    );
+  }
+
+  const toggleTodos = (id) => {
+    if (!id)
+      return;
+    setTodos( prev =>
+      prev.map(current => {
+        if (current.id !== id)
+          return current;
+        
+        return {
+          ...current,
+          completed: !current.complited
+        }
+      })
+    );  
   }
 
   return (
@@ -37,7 +74,7 @@ function Todos() {
         <div className={styles.btnContainer}>
           <Button text = 'Добавить' onClick = {addTodo}/>
         </div>
-        <TodoList items={defaultTodos} />
+        <TodoList items={todos} onItemClick={toggleTodos} onItemDoubleClick={deleteTodos}/>
       </div>  
   </div>
   );
