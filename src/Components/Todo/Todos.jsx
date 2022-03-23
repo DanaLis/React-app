@@ -1,5 +1,6 @@
 import TodoList from './TodoList';
-import styles from '../../assets/css/Todos.module.css'
+import styles from '../../assets/css/Todos.module.css';
+import Button from './Button';
 
 function Todos() {
 
@@ -26,9 +27,18 @@ function Todos() {
     },
   ];
 
+  const addTodo = () => {
+    alert('Пока ничего не добавлено');
+  }
+
   return (
-  <div className={styles.todos}>
-    <TodoList items={defaultTodos} />
+    <div className={styles.todos}>
+      <div>
+        <div className={styles.btnContainer}>
+          <Button text = 'Добавить' onClick = {addTodo}/>
+        </div>
+        <TodoList items={defaultTodos} />
+      </div>  
   </div>
   );
 }

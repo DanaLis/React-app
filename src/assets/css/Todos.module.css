@@ -4,3 +4,10 @@
   align-items: center;
   height: 100vh;
   }
+
+.btnContainer {
+  display: flex;
+  justify-content: right; 
+  align-items: center;
+  margin-bottom: 8px;
+}
