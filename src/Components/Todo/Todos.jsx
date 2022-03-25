@@ -6,7 +6,7 @@ import {nanoid} from 'nanoid';
 
 function Todos() {
 
-  const defaultTodos = [
+  /*const defaultTodos = [
     {
       id: nanoid(),
       title: 'Задача 1',
@@ -27,7 +27,7 @@ function Todos() {
       title: 'Задача 4',
       completed: true,
     },
-  ];
+  ];*/
 
   const [todos, setTodos] = useState([]);
 
@@ -62,10 +62,10 @@ function Todos() {
         
         return {
           ...current,
-          completed: !current.complited
+          completed: !current.completed
         }
       })
-    );  
+    );
   }
 
   useEffect(() => {
