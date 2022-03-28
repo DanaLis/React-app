@@ -1,6 +1,7 @@
 import './App.css';
 import {useState} from 'react';
 import Button from './Components/Todo/Button';
+import {nanoid} from 'nanoid';
  
 function App() {
 
@@ -30,19 +31,21 @@ function App() {
   }
 
   return (
-    <div className='info__box'>
+    <div className='info-box'>
+      <div className='header'>
         <Button className = 'button' text = 'Получить данные' onClick={fetchUsers}></Button>
-        <div className='container'>
-          <div className='usersName'> 
-            {users.map((user) => <span onClick={() => getUserPosts(user.id)}>{user.name} - {user.id}</span>)}
+      </div>
+      <div className='container'>
+          <div className='users-name'> 
+            {users.map((user) => <span key = {nanoid()} onClick={() => getUserPosts(user.id)}>{user.name} - {user.id}</span>)}
           </div>
-          <div className='userPosts'>
-            {userPosts.map((post) => <div onClick={() => getPostComments(post.id)}> <h3 className='post-title'>{post.title}</h3> <span>{post.body}</span> </div>)}
+          <div className='user-posts'>
+            {userPosts.map((post) => <div className='user-posts-content' key = {nanoid()} onClick={() => getPostComments(post.id)}> <h3 className='post-title'>{post.title}</h3> <span>{post.body}</span> </div>)}
           </div>
-          <div className='postComment'>
-            {postComments.map((postComment) => <div> <h3 className='post-title'>{postComment.email}</h3> <span>{postComment.body}</span> </div>)}
+          <div className='post-comment'>
+            {postComments.map((postComment) => <div className='post-comment-content' key = {nanoid()}> <h3 className='post-title'>{postComment.email}</h3> <span>{postComment.body}</span> </div>)}
           </div>
-        </div>
+      </div>
     </div>
   )
 }

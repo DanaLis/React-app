@@ -37,41 +37,68 @@
   }
 }
 
-.info__box {
+.info-box {
+  width: 1440px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 50px 100px 50px 100px;
+  margin: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 20px 100px 0 100px;
+  width: 1240px;
 }
 
 .container {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  margin-top: 15px;
+  margin: 20px 100px 50px 100px;
+  justify-content: space-between;
 }
 
-.usersName {
+.users-name {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  row-gap: 5px;
   width: 300px;
 }
 
-.userPosts {
+.user-posts {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   width: 818px;
+  row-gap: 20px;
+}
+
+.user-posts-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  row-gap: 15px;
 }
 
 .post-title {
-  margin-top: 10px;
+  margin: 0px;
 }
 
-.postComment {
-  width: 1118px;
+.post-comment {
+  width: 1240px;
   display: flex;
   flex-direction: column;
   margin-top: 20px;
+  row-gap: 20px;
+}
+
+.post-comment-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  row-gap: 15px;
 }
