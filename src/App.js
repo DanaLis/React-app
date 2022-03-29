@@ -1,13 +1,39 @@
 import './App.css';
 import {useState} from 'react';
-import Button from './Components/Todo/Button';
-import {nanoid} from 'nanoid';
+import {UsersList} from './Components/UsersList';
+import {PostsGrid} from './Components/PostsGrid';
+import {CommentsDialog} from './Components/CommentsDialog';
+import Button from '@mui/material/Button';
+import {AlbomsList} from './Components/AlbomsList';
+
  
 function App() {
 
   const [users, setUsers] = useState([]);
   const [userPosts, setUserPosts] = useState([]);
   const [postComments, setPostComments] = useState([]);
+  const [alboms, setUserAlboms] = useState([]);
+  const [openComment, setOpenComment] = useState(false);
+  const [open, setOpen] = useState(0);
+
+  const handleClick = (userId) => {
+    setOpen(userId);
+  };
+ 
+  const handleClickOpen = () => {
+    setOpenComment(true);
+  };
+
+  const handleClose = () => {
+    setOpenComment(false);
+  };
+
+  function getUserAlboms(userId) {
+    fetch(`https://jsonplaceholder.typicode.com/albums?userId=${userId}`)
+     .then(result => result.json())
+     .then(data => setUserAlboms(data))
+     .catch(err => console.log(err))
+  }
 
   function fetchUsers() {
     fetch('https://jsonplaceholder.typicode.com/users')
@@ -27,24 +53,21 @@ function App() {
     fetch(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`)
      .then(result => result.json())
      .then(data => setPostComments(data))
+     .then(() => handleClickOpen())
      .catch(err => console.log(err))
   }
 
   return (
     <div className='info-box'>
       <div className='header'>
-        <Button className = 'button' text = 'Получить данные' onClick={fetchUsers}></Button>
+        <Button onClick={fetchUsers}>Получить список пользователей</Button>
       </div>
       <div className='container'>
-          <div className='users-name'> 
-            {users.map((user) => <span key = {nanoid()} onClick={() => getUserPosts(user.id)}>{user.name} - {user.id}</span>)}
-          </div>
-          <div className='user-posts'>
-            {userPosts.map((post) => <div className='user-posts-content' key = {nanoid()} onClick={() => getPostComments(post.id)}> <h3 className='post-title'>{post.title}</h3> <span>{post.body}</span> </div>)}
-          </div>
-          <div className='post-comment'>
-            {postComments.map((postComment) => <div className='post-comment-content' key = {nanoid()}> <h3 className='post-title'>{postComment.email}</h3> <span>{postComment.body}</span> </div>)}
-          </div>
+        <UsersList users={users} open = {open} getUsersAlbom = {getUserAlboms} handleClick = {handleClick} getUserPosts= {getUserPosts}/>
+        <AlbomsList alboms={alboms}/>
+      
+        <PostsGrid userPosts={userPosts} onFetchComments={getPostComments} />
+        <CommentsDialog onClose={handleClose} open={openComment} postComments={postComments} />
       </div>
     </div>
   )
