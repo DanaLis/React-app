@@ -7,7 +7,7 @@ import Collapse from '@mui/material/Collapse';
 import styles from '../assets/sass/UserList.module.sass';
 
 
-export const UsersList = ({users, handleClick, open, getUserPosts, getUsersAlbom}) => (
+export const UsersList = ({users, handleClickOnUser, openUser, getUserPosts, getUsersAlbom}) => (
   <div className = {styles.usersName}>
     <List 
       sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }} component="nav"
@@ -20,10 +20,10 @@ export const UsersList = ({users, handleClick, open, getUserPosts, getUsersAlbom
     >
     {users.map((user) => (
       <>
-      <ListItemButton onClick={() => handleClick(user.id)} key={user.id}>
+      <ListItemButton onClick={() => handleClickOnUser(user.id)} key={user.id}>
         <ListItemText primary={user.name} />
       </ListItemButton>
-      <Collapse in={open === user.id} timeout="auto" unmountOnExit>
+      <Collapse in={openUser === user.id} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItemButton sx={{ pl: 4 }}>
               <ListItemText onClick={()=> getUsersAlbom(user.id)} primary="Alboms" />

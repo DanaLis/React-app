@@ -1,3 +1,4 @@
+
 import * as React from 'react';
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
@@ -5,7 +6,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import styles from '../assets/sass/AlbomsList.module.sass'
 
-export const AlbomsList = ({alboms}) => (
+export const AlbomsList = ({alboms, getAlbomPhotos}) => (
   <div className={styles.albomslist}>
     <List 
       sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }} component="nav"
@@ -17,7 +18,7 @@ export const AlbomsList = ({alboms}) => (
       }
     >
     {alboms.map((albom) => (
-      <ListItemButton key={albom.id}>
+      <ListItemButton onClick={() => getAlbomPhotos(albom.id)} key={albom.id}>
         <ListItemText primary={albom.title} />
       </ListItemButton>
     ))}

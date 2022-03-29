@@ -5,6 +5,7 @@ import {PostsGrid} from './Components/PostsGrid';
 import {CommentsDialog} from './Components/CommentsDialog';
 import Button from '@mui/material/Button';
 import {AlbomsList} from './Components/AlbomsList';
+import {ImagesList} from './Components/ImagesList';
 
  
 function App() {
@@ -14,10 +15,11 @@ function App() {
   const [postComments, setPostComments] = useState([]);
   const [alboms, setUserAlboms] = useState([]);
   const [openComment, setOpenComment] = useState(false);
-  const [open, setOpen] = useState(0);
+  const [openUser, setOpenUser] = useState(0);
+  const [photos, setPhotos] = useState([]);
 
-  const handleClick = (userId) => {
-    setOpen(userId);
+  const handleClickOnUser = (userId) => {
+    setOpenUser(userId);
   };
  
   const handleClickOpen = () => {
@@ -32,6 +34,13 @@ function App() {
     fetch(`https://jsonplaceholder.typicode.com/albums?userId=${userId}`)
      .then(result => result.json())
      .then(data => setUserAlboms(data))
+     .catch(err => console.log(err))
+  }
+
+  function getAlbomPhotos(albomId) {
+    fetch(`https://jsonplaceholder.typicode.com/photos?albumId=${albomId}`)
+     .then(result => result.json())
+     .then(data => setPhotos(data))
      .catch(err => console.log(err))
   }
 
@@ -63,9 +72,11 @@ function App() {
         <Button onClick={fetchUsers}>Получить список пользователей</Button>
       </div>
       <div className='container'>
-        <UsersList users={users} open = {open} getUsersAlbom = {getUserAlboms} handleClick = {handleClick} getUserPosts= {getUserPosts}/>
-        <AlbomsList alboms={alboms}/>
-      
+        <UsersList users={users} openUser = {openUser}
+          getUsersAlbom = {getUserAlboms} handleClickOnUser = {handleClickOnUser} 
+          getUserPosts= {getUserPosts}/>
+        <AlbomsList alboms={alboms} getAlbomPhotos={getAlbomPhotos} />
+        <ImagesList photos={photos}/>
         <PostsGrid userPosts={userPosts} onFetchComments={getPostComments} />
         <CommentsDialog onClose={handleClose} open={openComment} postComments={postComments} />
       </div>
